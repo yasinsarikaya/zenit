@@ -1,4 +1,4 @@
-# Zenit ◇ — Deine eigene Planungs-App (PWA)
+# Zenit 💎 — Deine eigene Planungs-App (PWA)
 
 Dein persönliches Planungssystem als **echte App**: installierbar auf dem Handy, gleichzeitig als Website nutzbar, mit **Live-Synchronisation** zwischen allen Geräten über eine Cloud-Datenbank.
 
@@ -60,7 +60,7 @@ VITE_SUPABASE_ANON_KEY=dein_anon_key
 npm run dev
 ```
 
-Browser öffnen: http://localhost:5173 → E-Mail eingeben → Login-Link aus deinem Postfach anklicken → du bist drin! ◇
+Browser öffnen: http://localhost:5173 → E-Mail eingeben → Login-Link aus deinem Postfach anklicken → du bist drin! 💎
 
 *(Der Login-Link öffnet sich auf dem Gerät, auf dem du ihn anklickst — beim lokalen Testen also am besten die Mail am PC öffnen.)*
 
@@ -165,4 +165,4 @@ Dein kompletter App-Zustand liegt als eine JSON-Zeile pro Nutzer in der Tabelle 
 - **Login-Link führt auf localhost:** Site URL in Supabase auf deine Vercel-URL stellen (Schritt 6.4).
 - **Sync klappt nicht:** Prüfen, ob die letzte Zeile von `schema.sql` (`alter publication …`) mit ausgeführt wurde.
 
-Viel Erfolg — und poliere dein Juwel! ◇
+Viel Erfolg — und poliere dein Juwel! 💎

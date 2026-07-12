@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { supabase, SUPABASE_CONFIGURED } from "./supabase.js";
 import { notifStatus, ensurePermission, notify } from "./notifications.js";
 import { MdDiamond, MdCheckCircle, MdRemove } from 'react-icons/md';
-// Kennung dieses Geräts/Tabs — verhindert Echo beim Live-Sync
+// Kennung dieses GerÃ¤ts/Tabs â€” verhindert Echo beim Live-Sync
 const ORIGIN_ID = Math.random().toString(36).slice(2, 10);
 
 // ---------- gems ----------
@@ -20,124 +20,124 @@ const T = {
     greetM: "Guten Morgen", greetA: "Guten Tag", greetE: "Guten Abend",
     navDash: "Zenit", navTasks: "Aufgaben", navAna: "Analyse", navWait: "Warten",
     day: "Tag", week: "Woche", month: "Monat", long: "Langzeit",
-    addTask: "Neue Aufgabe", taskTitle: "Was möchtest du erreichen?",
-    descPh: "Beschreibung (optional)…", chooseLevel: "Zeitebene",
+    addTask: "Neue Aufgabe", taskTitle: "Was mÃ¶chtest du erreichen?",
+    descPh: "Beschreibung (optional)â€¦", chooseLevel: "Zeitebene",
     category: "Kategorie", newCategory: "Neue Kategorie", noCategory: "Ohne",
     isLesson: "Ist das eine Lektion?", yes: "Ja", no: "Nein",
     repeatQ: "Wiederholungsplan aktivieren?",
-    repeatInfo: "Nach Abschluss: Wiederholung nach 1, 3 und 7 Wochen — danach 2× pro Monat.",
-    save: "Fertig", cancel: "Abbrechen", next: "Weiter", back: "Zurück",
-    adoptWeek: "Nächste Woche", adoptAsk: "Für nächste Woche einplanen?",
-    planSunday: "Sonntag — Wochenplanung", planMonth: "Letztes Wochenende — Monatsplanung",
+    repeatInfo: "Nach Abschluss: Wiederholung nach 1, 3 und 7 Wochen â€” danach 2Ã— pro Monat.",
+    save: "Fertig", cancel: "Abbrechen", next: "Weiter", back: "ZurÃ¼ck",
+    adoptWeek: "NÃ¤chste Woche", adoptAsk: "FÃ¼r nÃ¤chste Woche einplanen?",
+    planSunday: "Sonntag â€” Wochenplanung", planMonth: "Letztes Wochenende â€” Monatsplanung",
     fixedTag: "fest",
-    overdue: "Überfällig", openTasks: "Offen", doneWeek: "Diese Woche",
+    overdue: "ÃœberfÃ¤llig", openTasks: "Offen", doneWeek: "Diese Woche",
     focusHead: "Im Fokus",
-    motivation: "Motivations-Sätze", addSentence: "Neuen Satz schreiben…", add: "Hinzufügen",
+    motivation: "Motivations-SÃ¤tze", addSentence: "Neuen Satz schreibenâ€¦", add: "HinzufÃ¼gen",
     settings: "Einstellungen", categories: "Kategorien", gem: "Dein Edelstein",
     gemNames: { emerald: "Smaragd", sapphire: "Saphir", amethyst: "Amethyst", champagne: "Gold" },
     emptyTasks: "Keine offenen Aufgaben auf dieser Ebene.",
     emptyWait: "Warteliste ist leer.",
-    emptyMotiv: "Schreibe deinen ersten Satz in den Einstellungen ◇",
-    emptyDue: "Alles ruhig. Nichts fällig.",
+    emptyMotiv: "Schreibe deinen ersten Satz in den Einstellungen â—‡",
+    emptyDue: "Alles ruhig. Nichts fÃ¤llig.",
     emptyHist: "Noch keine erledigten Aufgaben.",
-    rep: "Wiederholung", repOf: "von 3", repMonthly: "2× pro Monat",
-    lesson: "Lektion", dueOn: "fällig",
+    rep: "Wiederholung", repOf: "von 3", repMonthly: "2Ã— pro Monat",
+    lesson: "Lektion", dueOn: "fÃ¤llig",
     planDays: "Fixe Planungstage",
-    planDaysInfo: "Jeden Sonntag: Wochenplanung. Letzter Samstag + Sonntag im Monat: Monatsplanung. Unveränderbar.",
+    planDaysInfo: "Jeden Sonntag: Wochenplanung. Letzter Samstag + Sonntag im Monat: Monatsplanung. UnverÃ¤nderbar.",
     ringDone: "erledigt heute",
-    jewel: "Dein Juwel", level: "Stufe", xpTo: "XP bis zur nächsten Stufe",
+    jewel: "Dein Juwel", level: "Stufe", xpTo: "XP bis zur nÃ¤chsten Stufe",
     tiers: ["Rohstein", "Geschliffen", "Facettiert", "Brillant", "Zenit"],
-    remindT: "Erinnerung", remindOver: "überfällig", remindWait: "in der Warteliste", show: "Ansehen",
-    reviewWeek: "Wochen-Rückblick", reviewMonth: "Monats-Rückblick",
-    reviewInfoW: "Diese Wochenaufgaben sind noch offen — entscheide, was mit ihnen passiert:",
-    reviewInfoM: "Diese Monatsaufgaben sind noch offen — entscheide, was mit ihnen passiert:",
-    nextMonth: "Nächster Monat", later: "Später", reviewEmpty: "Alles entschieden ◇",
+    remindT: "Erinnerung", remindOver: "Ã¼berfÃ¤llig", remindWait: "in der Warteliste", show: "Ansehen",
+    reviewWeek: "Wochen-RÃ¼ckblick", reviewMonth: "Monats-RÃ¼ckblick",
+    reviewInfoW: "Diese Wochenaufgaben sind noch offen â€” entscheide, was mit ihnen passiert:",
+    reviewInfoM: "Diese Monatsaufgaben sind noch offen â€” entscheide, was mit ihnen passiert:",
+    nextMonth: "NÃ¤chster Monat", later: "SpÃ¤ter", reviewEmpty: "Alles entschieden â—‡",
     coach: "Zenit-Coach", coachBtn: "Woche mit dem Coach planen",
-    coachSun: "Es ist Sonntag — lass uns deine Woche planen ◇",
-    coachThink: "Der Coach betrachtet dein Juwel…",
-    coachErr: "Coach gerade nicht erreichbar — versuch es gleich nochmal.",
-    coachSetup: "Coach-Funktion noch nicht eingerichtet — siehe README, Schritt 7.",
-    coachAdd: "Übernehmen", coachAgain: "Neu planen",
-    coachHint: "Der Coach kennt deine offenen Aufgaben, deine Warteliste und deine Woche — und schlägt dir einen Plan vor.",
+    coachSun: "Es ist Sonntag â€” lass uns deine Woche planen â—‡",
+    coachThink: "Der Coach betrachtet dein Juwelâ€¦",
+    coachErr: "Coach gerade nicht erreichbar â€” versuch es gleich nochmal.",
+    coachSetup: "Coach-Funktion noch nicht eingerichtet â€” siehe README, Schritt 7.",
+    coachAdd: "Ãœbernehmen", coachAgain: "Neu planen",
+    coachHint: "Der Coach kennt deine offenen Aufgaben, deine Warteliste und deine Woche â€” und schlÃ¤gt dir einen Plan vor.",
     anaHead: "Deine Analyse",
     statsTotal: "Gesamt erledigt", streak: "Tage-Serie", lessonsDone: "Lektionen",
     last7: "Letzte 7 Tage", byLevel: "Nach Ebene", byCat: "Nach Kategorie",
-    bestDay: "Stärkster Wochentag", history: "Alles Geschaffte", todayW: "Heute",
+    bestDay: "StÃ¤rkster Wochentag", history: "Alles Geschaffte", todayW: "Heute",
     account: "Konto", signOut: "Abmelden",
     authTitle: "Willkommen bei Zenit",
-    authInfo: "Melde dich mit deiner E-Mail an — du bekommst einen Login-Link. Damit synchronisiert sich Zenit zwischen Handy und Website.",
+    authInfo: "Melde dich mit deiner E-Mail an â€” du bekommst einen Login-Link. Damit synchronisiert sich Zenit zwischen Handy und Website.",
     authEmail: "deine@email.de", authSend: "Login-Link senden",
-    authSent: "Link verschickt! Prüfe dein Postfach ◇",
-    authErr: "Das hat nicht geklappt — prüfe die E-Mail-Adresse.",
-    notif: "Benachrichtigungen", notifEnable: "Aktivieren", notifOn: "Aktiv ◇",
-    notifDenied: "Im Browser blockiert — erlaube Benachrichtigungen in den Seiteneinstellungen.",
-    notifUnsupported: "Dieser Browser unterstützt keine Benachrichtigungen.",
-    notifTime: "Tägliche Erinnerung um",
-    notifInfo: "Tägliche Zusammenfassung (Fälliges, Warteliste, Planungstage), solange Zenit installiert bzw. geöffnet ist. Push bei komplett geschlossener App = Stufe 2 (README).",
-    nDue: "heute fällig", nOver: "überfällig", nWait: "in der Warteliste",
+    authSent: "Link verschickt! PrÃ¼fe dein Postfach â—‡",
+    authErr: "Das hat nicht geklappt â€” prÃ¼fe die E-Mail-Adresse.",
+    notif: "Benachrichtigungen", notifEnable: "Aktivieren", notifOn: "Aktiv â—‡",
+    notifDenied: "Im Browser blockiert â€” erlaube Benachrichtigungen in den Seiteneinstellungen.",
+    notifUnsupported: "Dieser Browser unterstÃ¼tzt keine Benachrichtigungen.",
+    notifTime: "TÃ¤gliche Erinnerung um",
+    notifInfo: "TÃ¤gliche Zusammenfassung (FÃ¤lliges, Warteliste, Planungstage), solange Zenit installiert bzw. geÃ¶ffnet ist. Push bei komplett geschlossener App = Stufe 2 (README).",
+    nDue: "heute fÃ¤llig", nOver: "Ã¼berfÃ¤llig", nWait: "in der Warteliste",
     nSun: "Wochenplanung heute", nMon: "Monatsplanung dieses Wochenende",
   },
   tr: {
-    tagline: "Günün zirvesi",
-    greetM: "Günaydın", greetA: "İyi günler", greetE: "İyi akşamlar",
-    navDash: "Zenit", navTasks: "Görevler", navAna: "Analiz", navWait: "Bekleme",
-    day: "Gün", week: "Hafta", month: "Ay", long: "Uzun Vade",
-    addTask: "Yeni görev", taskTitle: "Neyi başarmak istiyorsun?",
-    descPh: "Açıklama (isteğe bağlı)…", chooseLevel: "Zaman düzeyi",
+    tagline: "GÃ¼nÃ¼n zirvesi",
+    greetM: "GÃ¼naydÄ±n", greetA: "Ä°yi gÃ¼nler", greetE: "Ä°yi akÅŸamlar",
+    navDash: "Zenit", navTasks: "GÃ¶revler", navAna: "Analiz", navWait: "Bekleme",
+    day: "GÃ¼n", week: "Hafta", month: "Ay", long: "Uzun Vade",
+    addTask: "Yeni gÃ¶rev", taskTitle: "Neyi baÅŸarmak istiyorsun?",
+    descPh: "AÃ§Ä±klama (isteÄŸe baÄŸlÄ±)â€¦", chooseLevel: "Zaman dÃ¼zeyi",
     category: "Kategori", newCategory: "Yeni kategori", noCategory: "Yok",
-    isLesson: "Bu bir ders mi?", yes: "Evet", no: "Hayır",
-    repeatQ: "Tekrar planı etkinleştirilsin mi?",
-    repeatInfo: "Tamamlandıktan sonra: 1, 3 ve 7 hafta sonra tekrar — ardından ayda 2 kez.",
-    save: "Tamam", cancel: "İptal", next: "İleri", back: "Geri",
-    adoptWeek: "Gelecek hafta", adoptAsk: "Gelecek hafta için planlansın mı?",
-    planSunday: "Pazar — haftalık planlama", planMonth: "Son hafta sonu — aylık planlama",
+    isLesson: "Bu bir ders mi?", yes: "Evet", no: "HayÄ±r",
+    repeatQ: "Tekrar planÄ± etkinleÅŸtirilsin mi?",
+    repeatInfo: "TamamlandÄ±ktan sonra: 1, 3 ve 7 hafta sonra tekrar â€” ardÄ±ndan ayda 2 kez.",
+    save: "Tamam", cancel: "Ä°ptal", next: "Ä°leri", back: "Geri",
+    adoptWeek: "Gelecek hafta", adoptAsk: "Gelecek hafta iÃ§in planlansÄ±n mÄ±?",
+    planSunday: "Pazar â€” haftalÄ±k planlama", planMonth: "Son hafta sonu â€” aylÄ±k planlama",
     fixedTag: "sabit",
-    overdue: "Gecikmiş", openTasks: "Açık", doneWeek: "Bu hafta",
+    overdue: "GecikmiÅŸ", openTasks: "AÃ§Ä±k", doneWeek: "Bu hafta",
     focusHead: "Odakta",
-    motivation: "Motivasyon cümleleri", addSentence: "Yeni cümle yaz…", add: "Ekle",
-    settings: "Ayarlar", categories: "Kategoriler", gem: "Taşını seç",
-    gemNames: { emerald: "Zümrüt", sapphire: "Safir", amethyst: "Ametist", champagne: "Altın" },
-    emptyTasks: "Bu düzeyde açık görev yok.",
-    emptyWait: "Bekleme listesi boş.",
-    emptyMotiv: "İlk cümleni ayarlardan yaz ◇",
-    emptyDue: "Her şey sakin. Bugün için bir şey yok.",
-    emptyHist: "Henüz tamamlanan görev yok.",
+    motivation: "Motivasyon cÃ¼mleleri", addSentence: "Yeni cÃ¼mle yazâ€¦", add: "Ekle",
+    settings: "Ayarlar", categories: "Kategoriler", gem: "TaÅŸÄ±nÄ± seÃ§",
+    gemNames: { emerald: "ZÃ¼mrÃ¼t", sapphire: "Safir", amethyst: "Ametist", champagne: "AltÄ±n" },
+    emptyTasks: "Bu dÃ¼zeyde aÃ§Ä±k gÃ¶rev yok.",
+    emptyWait: "Bekleme listesi boÅŸ.",
+    emptyMotiv: "Ä°lk cÃ¼mleni ayarlardan yaz â—‡",
+    emptyDue: "Her ÅŸey sakin. BugÃ¼n iÃ§in bir ÅŸey yok.",
+    emptyHist: "HenÃ¼z tamamlanan gÃ¶rev yok.",
     rep: "Tekrar", repOf: "/ 3", repMonthly: "Ayda 2 kez",
     lesson: "Ders", dueOn: "tarih",
-    planDays: "Sabit planlama günleri",
-    planDaysInfo: "Her Pazar: haftalık plan. Ayın son Cumartesi + Pazar günü: aylık plan. Değiştirilemez.",
-    ringDone: "bugün tamamlandı",
-    jewel: "Taşın", level: "Seviye", xpTo: "sonraki seviyeye XP",
-    tiers: ["Ham Taş", "İşlenmiş", "Fasetli", "Pırlanta", "Zenit"],
-    remindT: "Hatırlatma", remindOver: "gecikmiş", remindWait: "bekleme listesinde", show: "Göster",
-    reviewWeek: "Hafta değerlendirmesi", reviewMonth: "Ay değerlendirmesi",
-    reviewInfoW: "Bu hafta görevleri hâlâ açık — ne olacağına karar ver:",
-    reviewInfoM: "Bu ay görevleri hâlâ açık — ne olacağına karar ver:",
-    nextMonth: "Gelecek ay", later: "Sonra", reviewEmpty: "Hepsi tamam ◇",
-    coach: "Zenit Koçu", coachBtn: "Haftayı koçla planla",
-    coachSun: "Bugün Pazar — haftanı birlikte planlayalım ◇",
-    coachThink: "Koç taşını inceliyor…",
-    coachErr: "Koça şu an ulaşılamıyor — birazdan tekrar dene.",
-    coachSetup: "Koç fonksiyonu henüz kurulmadı — README, adım 7.",
+    planDays: "Sabit planlama gÃ¼nleri",
+    planDaysInfo: "Her Pazar: haftalÄ±k plan. AyÄ±n son Cumartesi + Pazar gÃ¼nÃ¼: aylÄ±k plan. DeÄŸiÅŸtirilemez.",
+    ringDone: "bugÃ¼n tamamlandÄ±",
+    jewel: "TaÅŸÄ±n", level: "Seviye", xpTo: "sonraki seviyeye XP",
+    tiers: ["Ham TaÅŸ", "Ä°ÅŸlenmiÅŸ", "Fasetli", "PÄ±rlanta", "Zenit"],
+    remindT: "HatÄ±rlatma", remindOver: "gecikmiÅŸ", remindWait: "bekleme listesinde", show: "GÃ¶ster",
+    reviewWeek: "Hafta deÄŸerlendirmesi", reviewMonth: "Ay deÄŸerlendirmesi",
+    reviewInfoW: "Bu hafta gÃ¶revleri hÃ¢lÃ¢ aÃ§Ä±k â€” ne olacaÄŸÄ±na karar ver:",
+    reviewInfoM: "Bu ay gÃ¶revleri hÃ¢lÃ¢ aÃ§Ä±k â€” ne olacaÄŸÄ±na karar ver:",
+    nextMonth: "Gelecek ay", later: "Sonra", reviewEmpty: "Hepsi tamam â—‡",
+    coach: "Zenit KoÃ§u", coachBtn: "HaftayÄ± koÃ§la planla",
+    coachSun: "BugÃ¼n Pazar â€” haftanÄ± birlikte planlayalÄ±m â—‡",
+    coachThink: "KoÃ§ taÅŸÄ±nÄ± inceliyorâ€¦",
+    coachErr: "KoÃ§a ÅŸu an ulaÅŸÄ±lamÄ±yor â€” birazdan tekrar dene.",
+    coachSetup: "KoÃ§ fonksiyonu henÃ¼z kurulmadÄ± â€” README, adÄ±m 7.",
     coachAdd: "Ekle", coachAgain: "Yeniden planla",
-    coachHint: "Koç açık görevlerini, bekleme listeni ve haftanı bilir — sana bir plan önerir.",
+    coachHint: "KoÃ§ aÃ§Ä±k gÃ¶revlerini, bekleme listeni ve haftanÄ± bilir â€” sana bir plan Ã¶nerir.",
     anaHead: "Analizin",
-    statsTotal: "Toplam tamamlanan", streak: "Gün serisi", lessonsDone: "Dersler",
-    last7: "Son 7 gün", byLevel: "Düzeye göre", byCat: "Kategoriye göre",
-    bestDay: "En güçlü gün", history: "Tüm başarılar", todayW: "Bugün",
-    account: "Hesap", signOut: "Çıkış yap",
-    authTitle: "Zenit'e hoş geldin",
-    authInfo: "E-postanla giriş yap — sana bir giriş bağlantısı göndereceğiz. Böylece Zenit telefon ve web arasında senkronize olur.",
-    authEmail: "eposta@adresin.com", authSend: "Giriş bağlantısı gönder",
-    authSent: "Bağlantı gönderildi! Gelen kutunu kontrol et ◇",
-    authErr: "Olmadı — e-posta adresini kontrol et.",
-    notif: "Bildirimler", notifEnable: "Etkinleştir", notifOn: "Aktif ◇",
-    notifDenied: "Tarayıcıda engellendi — site ayarlarından bildirimlere izin ver.",
-    notifUnsupported: "Bu tarayıcı bildirimleri desteklemiyor.",
-    notifTime: "Günlük hatırlatma saati",
-    notifInfo: "Zenit yüklü/açıkken günlük özet alırsın (bugün olanlar, bekleme listesi, planlama günleri). Uygulama tamamen kapalıyken push = 2. aşama (README).",
-    nDue: "bugün", nOver: "gecikmiş", nWait: "bekleme listesinde",
-    nSun: "bugün haftalık planlama", nMon: "bu hafta sonu aylık planlama",
+    statsTotal: "Toplam tamamlanan", streak: "GÃ¼n serisi", lessonsDone: "Dersler",
+    last7: "Son 7 gÃ¼n", byLevel: "DÃ¼zeye gÃ¶re", byCat: "Kategoriye gÃ¶re",
+    bestDay: "En gÃ¼Ã§lÃ¼ gÃ¼n", history: "TÃ¼m baÅŸarÄ±lar", todayW: "BugÃ¼n",
+    account: "Hesap", signOut: "Ã‡Ä±kÄ±ÅŸ yap",
+    authTitle: "Zenit'e hoÅŸ geldin",
+    authInfo: "E-postanla giriÅŸ yap â€” sana bir giriÅŸ baÄŸlantÄ±sÄ± gÃ¶ndereceÄŸiz. BÃ¶ylece Zenit telefon ve web arasÄ±nda senkronize olur.",
+    authEmail: "eposta@adresin.com", authSend: "GiriÅŸ baÄŸlantÄ±sÄ± gÃ¶nder",
+    authSent: "BaÄŸlantÄ± gÃ¶nderildi! Gelen kutunu kontrol et â—‡",
+    authErr: "OlmadÄ± â€” e-posta adresini kontrol et.",
+    notif: "Bildirimler", notifEnable: "EtkinleÅŸtir", notifOn: "Aktif â—‡",
+    notifDenied: "TarayÄ±cÄ±da engellendi â€” site ayarlarÄ±ndan bildirimlere izin ver.",
+    notifUnsupported: "Bu tarayÄ±cÄ± bildirimleri desteklemiyor.",
+    notifTime: "GÃ¼nlÃ¼k hatÄ±rlatma saati",
+    notifInfo: "Zenit yÃ¼klÃ¼/aÃ§Ä±kken gÃ¼nlÃ¼k Ã¶zet alÄ±rsÄ±n (bugÃ¼n olanlar, bekleme listesi, planlama gÃ¼nleri). Uygulama tamamen kapalÄ±yken push = 2. aÅŸama (README).",
+    nDue: "bugÃ¼n", nOver: "gecikmiÅŸ", nWait: "bekleme listesinde",
+    nSun: "bugÃ¼n haftalÄ±k planlama", nMon: "bu hafta sonu aylÄ±k planlama",
   },
   en: {
     tagline: "Your day at its zenith",
@@ -145,26 +145,26 @@ const T = {
     navDash: "Zenit", navTasks: "Tasks", navAna: "Insights", navWait: "Waiting",
     day: "Day", week: "Week", month: "Month", long: "Long-term",
     addTask: "New task", taskTitle: "What do you want to achieve?",
-    descPh: "Description (optional)…", chooseLevel: "Time level",
+    descPh: "Description (optional)â€¦", chooseLevel: "Time level",
     category: "Category", newCategory: "New category", noCategory: "None",
     isLesson: "Is this a lesson?", yes: "Yes", no: "No",
     repeatQ: "Enable repetition plan?",
-    repeatInfo: "After completion: repeat after 1, 3 and 7 weeks — then 2× per month.",
+    repeatInfo: "After completion: repeat after 1, 3 and 7 weeks â€” then 2Ã— per month.",
     save: "Done", cancel: "Cancel", next: "Next", back: "Back",
     adoptWeek: "Next week", adoptAsk: "Plan for next week?",
-    planSunday: "Sunday — weekly planning", planMonth: "Last weekend — monthly planning",
+    planSunday: "Sunday â€” weekly planning", planMonth: "Last weekend â€” monthly planning",
     fixedTag: "fixed",
     overdue: "Overdue", openTasks: "Open", doneWeek: "This week",
     focusHead: "In focus",
-    motivation: "Motivation sentences", addSentence: "Write a new sentence…", add: "Add",
+    motivation: "Motivation sentences", addSentence: "Write a new sentenceâ€¦", add: "Add",
     settings: "Settings", categories: "Categories", gem: "Your gem",
     gemNames: { emerald: "Emerald", sapphire: "Sapphire", amethyst: "Amethyst", champagne: "Gold" },
     emptyTasks: "No open tasks on this level.",
     emptyWait: "Waitlist is empty.",
-    emptyMotiv: "Write your first sentence in settings ◇",
+    emptyMotiv: "Write your first sentence in settings â—‡",
     emptyDue: "All calm. Nothing due.",
     emptyHist: "No completed tasks yet.",
-    rep: "Repetition", repOf: "of 3", repMonthly: "2× per month",
+    rep: "Repetition", repOf: "of 3", repMonthly: "2Ã— per month",
     lesson: "Lesson", dueOn: "due",
     planDays: "Fixed planning days",
     planDaysInfo: "Every Sunday: weekly planning. Last Saturday + Sunday of the month: monthly planning. Cannot be changed.",
@@ -173,28 +173,28 @@ const T = {
     tiers: ["Raw Stone", "Polished", "Faceted", "Brilliant", "Zenith"],
     remindT: "Reminder", remindOver: "overdue", remindWait: "on the waitlist", show: "View",
     reviewWeek: "Weekly review", reviewMonth: "Monthly review",
-    reviewInfoW: "These week tasks are still open — decide what happens to them:",
-    reviewInfoM: "These month tasks are still open — decide what happens to them:",
-    nextMonth: "Next month", later: "Later", reviewEmpty: "All decided ◇",
+    reviewInfoW: "These week tasks are still open â€” decide what happens to them:",
+    reviewInfoM: "These month tasks are still open â€” decide what happens to them:",
+    nextMonth: "Next month", later: "Later", reviewEmpty: "All decided â—‡",
     coach: "Zenit Coach", coachBtn: "Plan the week with the coach",
-    coachSun: "It's Sunday — let's plan your week ◇",
-    coachThink: "The coach is studying your jewel…",
-    coachErr: "Coach unavailable right now — try again shortly.",
-    coachSetup: "Coach function not set up yet — see README, step 7.",
+    coachSun: "It's Sunday â€” let's plan your week â—‡",
+    coachThink: "The coach is studying your jewelâ€¦",
+    coachErr: "Coach unavailable right now â€” try again shortly.",
+    coachSetup: "Coach function not set up yet â€” see README, step 7.",
     coachAdd: "Add", coachAgain: "Plan again",
-    coachHint: "The coach knows your open tasks, waitlist and week — and suggests a plan.",
+    coachHint: "The coach knows your open tasks, waitlist and week â€” and suggests a plan.",
     anaHead: "Your insights",
     statsTotal: "Total completed", streak: "Day streak", lessonsDone: "Lessons",
     last7: "Last 7 days", byLevel: "By level", byCat: "By category",
     bestDay: "Strongest weekday", history: "Everything achieved", todayW: "Today",
     account: "Account", signOut: "Sign out",
     authTitle: "Welcome to Zenit",
-    authInfo: "Sign in with your email — we'll send you a login link. Zenit then syncs between phone and web.",
+    authInfo: "Sign in with your email â€” we'll send you a login link. Zenit then syncs between phone and web.",
     authEmail: "you@email.com", authSend: "Send login link",
-    authSent: "Link sent! Check your inbox ◇",
-    authErr: "That didn't work — check the email address.",
-    notif: "Notifications", notifEnable: "Enable", notifOn: "Active ◇",
-    notifDenied: "Blocked in the browser — allow notifications in site settings.",
+    authSent: "Link sent! Check your inbox â—‡",
+    authErr: "That didn't work â€” check the email address.",
+    notif: "Notifications", notifEnable: "Enable", notifOn: "Active â—‡",
+    notifDenied: "Blocked in the browser â€” allow notifications in site settings.",
     notifUnsupported: "This browser doesn't support notifications.",
     notifTime: "Daily reminder at",
     notifInfo: "Daily summary (due items, waitlist, planning days) while Zenit is installed or open. Push with the app fully closed = Stage 2 (README).",
@@ -262,7 +262,7 @@ export default function App() {
 
   if (!authChecked)
     return (<div className="z-root" style={{ "--acc": GEMS.emerald.acc, "--accSoft": GEMS.emerald.soft, "--accGlow": GEMS.emerald.glow }}>
-      <style>{CSS}</style><div className="z-loading">◇</div></div>);
+      <style>{CSS}</style><div className="z-loading">â—‡</div></div>);
 
   // Offline-Modus: ohne Supabase direkt die App anzeigen (Daten lokal im Speicher)
   if (!SUPABASE_CONFIGURED) return <Zenit session={null} />;
@@ -307,7 +307,7 @@ function AuthScreen() {
             onChange={(e) => setEmail(e.target.value)} autoFocus />
           <button className="z-mainbtn" style={{ width: "100%", marginTop: 12 }}
             disabled={state === "sending" || !email.trim()} onClick={send}>
-            {state === "sending" ? "…" : t.authSend}
+            {state === "sending" ? "â€¦" : t.authSend}
           </button>
           {state === "sent" && <p className="z-authok">{t.authSent}</p>}
           {state === "error" && <p className="z-autherr">{t.authErr}</p>}
@@ -399,7 +399,7 @@ function Zenit({ session }) {
     return () => clearTimeout(saveTimer.current);
   }, [lang, gem, tasks, cats, sentences, notifTime, lastNotif, lastWeekReview, lastMonthReview, loaded, userId, isOnline]);
 
-  // ---- Live-Sync zwischen Geräten ----
+  // ---- Live-Sync zwischen GerÃ¤ten ----
   useEffect(() => {
     if (!isOnline) return;
     const channel = supabase
@@ -428,7 +428,7 @@ function Zenit({ session }) {
     return () => clearTimeout(id);
   }, [gain]);
 
-  // ---- Sonntags- / Monatsende-Rückblick ----
+  // ---- Sonntags- / Monatsende-RÃ¼ckblick ----
   useEffect(() => {
     if (!loaded || showReview) return;
     if (isSunday() && lastWeekReview !== today() &&
@@ -442,7 +442,7 @@ function Zenit({ session }) {
     }
   }, [loaded, tasks, lastWeekReview, lastMonthReview, showReview]);
 
-  // ---- Tägliche Erinnerung (Stufe 1) ----
+  // ---- TÃ¤gliche Erinnerung (Stufe 1) ----
   useEffect(() => {
     if (!loaded) return;
     const check = () => {
@@ -464,7 +464,7 @@ function Zenit({ session }) {
       if (isSunday()) parts.push(t.nSun);
       if (isLastWeekendOfMonth()) parts.push(t.nMon);
 
-      if (parts.length) notify("Zenit ◇", parts.join(" · "));
+      if (parts.length) notify("Zenit â—‡", parts.join(" Â· "));
       setLastNotif(today());
     };
     check();
@@ -520,13 +520,13 @@ function Zenit({ session }) {
   const vars = { "--acc": g.acc, "--accSoft": g.soft, "--accGlow": g.glow };
 
   if (!loaded)
-    return (<div className="z-root" style={vars}><style>{CSS}</style><div className="z-loading">◇</div></div>);
+    return (<div className="z-root" style={vars}><style>{CSS}</style><div className="z-loading">â—‡</div></div>);
 
   return (
     <div className="z-root" style={vars}>
       <style>{CSS}</style>
       <div className="z-halo" />
-      {gain && <div className="z-xptoast">＋{gain} ◇</div>}
+      {gain && <div className="z-xptoast">ï¼‹{gain} â—‡</div>}
 
       <header className="z-head">
         <div className="z-wordmark">Z E N I T <span className="z-gemdot" /></div>
@@ -552,28 +552,28 @@ function Zenit({ session }) {
             {!remindDismissed && (overdue.length > 0 || wait.length > 0) && (
               <div className="z-remind">
                 <span className="z-remindtxt">
-                  ◇ {overdue.length > 0 && <b>{overdue.length} {t.remindOver}</b>}
-                  {overdue.length > 0 && wait.length > 0 && " · "}
+                  â—‡ {overdue.length > 0 && <b>{overdue.length} {t.remindOver}</b>}
+                  {overdue.length > 0 && wait.length > 0 && " Â· "}
                   {wait.length > 0 && <b>{wait.length} {t.remindWait}</b>}
                 </span>
                 <span className="z-remindacts">
                   {wait.length > 0 && <button className="z-act wide" onClick={() => setView("wait")}>{t.show}</button>}
-                  <button className="z-act dim" onClick={() => setRemindDismissed(true)}>✕</button>
+                  <button className="z-act dim" onClick={() => setRemindDismissed(true)}>âœ•</button>
                 </span>
               </div>
             )}
 
             {(isSunday() || isLastWeekendOfMonth()) && (
               <div className="z-planline">
-                {isSunday() && <span>◇ {t.planSunday} · <em>{t.fixedTag}</em></span>}
-                {isLastWeekendOfMonth() && <span>◇ {t.planMonth} · <em>{t.fixedTag}</em></span>}
+                {isSunday() && <span>â—‡ {t.planSunday} Â· <em>{t.fixedTag}</em></span>}
+                {isLastWeekendOfMonth() && <span>â—‡ {t.planMonth} Â· <em>{t.fixedTag}</em></span>}
               </div>
             )}
 
             <button className={"z-coachcard" + (isSunday() ? " sun" : "")} onClick={() => setShowCoach(true)}>
-              <span className="z-coachic">✦</span>
+              <span className="z-coachic">âœ¦</span>
               <span className="z-coachlbl">{isSunday() ? t.coachSun : t.coachBtn}</span>
-              <span className="z-coacharrow">→</span>
+              <span className="z-coacharrow">â†’</span>
             </button>
 
             <Ring done={doneToday.length} due={dueToday.length + overdue.length} t={t} />
@@ -581,7 +581,7 @@ function Zenit({ session }) {
             <div className="z-jewelrow">
               <Jewel tier={tier} />
               <div className="z-jewelinfo">
-                <div className="z-jeweltier">{t.tiers[tier - 1]}<span className="z-jewellvl"> · {t.level} {lvl}</span></div>
+                <div className="z-jeweltier">{t.tiers[tier - 1]}<span className="z-jewellvl"> Â· {t.level} {lvl}</span></div>
                 <div className="z-xpbar"><span style={{ width: xpInLvl + "%" }} /></div>
                 <div className="z-xplbl">{100 - xpInLvl} {t.xpTo}</div>
               </div>
@@ -598,8 +598,8 @@ function Zenit({ session }) {
             {[...overdue, ...dueToday].map((task) => (
               <Card key={task.id} task={task} t={t} lang={lang} catColor={catColor}
                 actions={<>
-                  <button className="z-act main" onClick={() => completeTask(task)}>✓</button>
-                  <button className="z-act" onClick={() => toWaitlist(task)}>‖</button>
+                  <button className="z-act main" onClick={() => completeTask(task)}>âœ“</button>
+                  <button className="z-act" onClick={() => toWaitlist(task)}>â€–</button>
                 </>} />
             ))}
           </>
@@ -616,9 +616,9 @@ function Zenit({ session }) {
             </div>
             <List tasks={open.filter((x) => x.level === levelTab)} t={t} lang={lang} catColor={catColor} empty={t.emptyTasks}
               actions={(task) => <>
-                <button className="z-act main" onClick={() => completeTask(task)}>✓</button>
-                <button className="z-act" onClick={() => toWaitlist(task)}>‖</button>
-                <button className="z-act dim" onClick={() => delTask(task)}>✕</button>
+                <button className="z-act main" onClick={() => completeTask(task)}>âœ“</button>
+                <button className="z-act" onClick={() => toWaitlist(task)}>â€–</button>
+                <button className="z-act dim" onClick={() => delTask(task)}>âœ•</button>
               </>} />
           </>
         )}
@@ -632,8 +632,8 @@ function Zenit({ session }) {
             <div className="z-sechead" style={{ marginTop: 4 }}>{t.adoptAsk}</div>
             <List tasks={wait} t={t} lang={lang} catColor={catColor} empty={t.emptyWait}
               actions={(task) => <>
-                <button className="z-act main wide" onClick={() => adoptNextWeek(task)}>→ {t.adoptWeek}</button>
-                <button className="z-act dim" onClick={() => delTask(task)}>✕</button>
+                <button className="z-act main wide" onClick={() => adoptNextWeek(task)}>â†’ {t.adoptWeek}</button>
+                <button className="z-act dim" onClick={() => delTask(task)}>âœ•</button>
               </>} />
           </>
         )}
@@ -641,17 +641,17 @@ function Zenit({ session }) {
 
       <nav className="z-dock">
         {[
-          ["dash", "◇", t.navDash],
-          ["tasks", "☰", t.navTasks],
-          ["ana", "◔", t.navAna],
-          ["wait", "‖", t.navWait, wait.length],
+          ["dash", "â—‡", t.navDash],
+          ["tasks", "â˜°", t.navTasks],
+          ["ana", "â—”", t.navAna],
+          ["wait", "â€–", t.navWait, wait.length],
         ].map(([id, ic, label, badge]) => (
           <button key={id} className={"z-dockbtn" + (view === id ? " on" : "")} onClick={() => setView(id)}>
             <span className="z-dockic">{ic}</span><span className="z-docklbl">{label}</span>
             {badge > 0 && <span className="z-dot" />}
           </button>
         ))}
-        <button className="z-fab" onClick={() => setShowAdd(true)}>＋</button>
+        <button className="z-fab" onClick={() => setShowAdd(true)}>ï¼‹</button>
       </nav>
 
       {showAdd && (
@@ -731,7 +731,7 @@ function Ring({ done, due, t }) {
           transform="rotate(-90 85 85)" className="z-ringarc" />
       </svg>
       <div className="z-ringcenter">
-        <b>{done}<span className="z-ringof">/{total || "–"}</span></b>
+        <b>{done}<span className="z-ringof">/{total || "â€“"}</span></b>
         <span className="z-ringlbl">{t.ringDone}</span>
       </div>
     </div>
@@ -756,7 +756,7 @@ function Analysis({ t, lang, done, catColor, totalXp }) {
   const maxLv = Math.max(1, ...byLevel.map((x) => x.n));
 
   const catCount = {};
-  done.forEach((x) => { const k = x.category || "–"; catCount[k] = (catCount[k] || 0) + 1; });
+  done.forEach((x) => { const k = x.category || "â€“"; catCount[k] = (catCount[k] || 0) + 1; });
   const byCat = Object.entries(catCount).sort((a, b) => b[1] - a[1]).slice(0, 6);
   const maxCat = Math.max(1, ...byCat.map((x) => x[1]));
 
@@ -833,12 +833,12 @@ function Analysis({ t, lang, done, catColor, totalXp }) {
       {groups.length === 0 && <div className="z-empty">{t.emptyHist}</div>}
       {groups.map((grp) => (
         <div key={grp.d} className="z-histgroup">
-          <div className="z-histdate">{grp.d === today() ? t.todayW : fmtFull(grp.d, lang)} <i>· {grp.items.length}</i></div>
+          <div className="z-histdate">{grp.d === today() ? t.todayW : fmtFull(grp.d, lang)} <i>Â· {grp.items.length}</i></div>
           {grp.items.map((x) => (
             <div key={x.id} className="z-histitem">
               <span className="z-cdot" style={{ background: catColor(x.category) }} />
               <span className="z-histtitle">{x.title}</span>
-              <span className="z-histmeta">{t[x.level]}{x.isLesson ? " · ◇" : ""} · +{taskXp(x)}</span>
+              <span className="z-histmeta">{t[x.level]}{x.isLesson ? " Â· â—‡" : ""} Â· +{taskXp(x)}</span>
             </div>
           ))}
         </div>
@@ -865,10 +865,10 @@ function Card({ task, t, lang, catColor, actions }) {
         <div className="z-cardtitle">{task.title}</div>
         {task.desc && <div className={"z-carddesc" + (expand ? " open" : "")}>{task.desc}</div>}
         <div className="z-cardmeta">
-          {task.category && <span style={{ color: catColor(task.category) }}>{task.category} · </span>}
+          {task.category && <span style={{ color: catColor(task.category) }}>{task.category} Â· </span>}
           <span>{t[task.level]}</span>
-          {task.isLesson && <span> · ◇ {t.lesson}{task.repeat ? ` · ${repLabel(task.repStage || 0, t)}` : ""}</span>}
-          {task.dueDate && <span className={late ? " z-red" : ""}> · {t.dueOn} {fmt(task.dueDate, lang)}</span>}
+          {task.isLesson && <span> Â· â—‡ {t.lesson}{task.repeat ? ` Â· ${repLabel(task.repStage || 0, t)}` : ""}</span>}
+          {task.dueDate && <span className={late ? " z-red" : ""}> Â· {t.dueOn} {fmt(task.dueDate, lang)}</span>}
         </div>
       </div>
       <div className="z-cardacts">{actions}</div>
@@ -882,7 +882,7 @@ function CoachModal({ t, lang, open, wait, doneThisWeek, cats, onAdd, onClose })
   const [data, setData] = useState(null);
   const [added, setAdded] = useState({});
 
-  const langName = lang === "de" ? "Deutsch" : lang === "tr" ? "Türkçe" : "English";
+  const langName = lang === "de" ? "Deutsch" : lang === "tr" ? "TÃ¼rkÃ§e" : "English";
 
   const plan = async () => {
     setState("loading");
@@ -930,14 +930,14 @@ function CoachModal({ t, lang, open, wait, doneThisWeek, cats, onAdd, onClose })
   return (
     <div className="z-overlay" onClick={onClose}>
       <div className="z-sheet" onClick={(e) => e.stopPropagation()}>
-        <div className="z-sheethead">✦ {t.coach}</div>
+        <div className="z-sheethead">âœ¦ {t.coach}</div>
 
         {state === "idle" && (<>
           <p className="z-info">{t.coachHint}</p>
-          <button className="z-mainbtn" style={{ width: "100%", marginTop: 10 }} onClick={plan}>✦ {t.coachBtn}</button>
+          <button className="z-mainbtn" style={{ width: "100%", marginTop: 10 }} onClick={plan}>âœ¦ {t.coachBtn}</button>
         </>)}
 
-        {state === "loading" && <div className="z-coachload">◇<br /><span>{t.coachThink}</span></div>}
+        {state === "loading" && <div className="z-coachload">â—‡<br /><span>{t.coachThink}</span></div>}
 
         {state === "setup" && <p className="z-info">{t.coachSetup}</p>}
 
@@ -955,12 +955,12 @@ function CoachModal({ t, lang, open, wait, doneThisWeek, cats, onAdd, onClose })
                 <div className="z-sugmeta">{t[LEVELS.includes(s.level) ? s.level : "week"]}</div>
               </div>
               <button className={"z-act" + (added[i] ? " dim" : " main")} disabled={added[i]} onClick={() => addSug(s, i)}>
-                {added[i] ? "✓" : "＋"}
+                {added[i] ? "âœ“" : "ï¼‹"}
               </button>
             </div>
           ))}
           <div className="z-sheetfoot">
-            <button className="z-ghostbtn" onClick={plan}>↻ {t.coachAgain}</button>
+            <button className="z-ghostbtn" onClick={plan}>â†» {t.coachAgain}</button>
             <button className="z-mainbtn" onClick={onClose}>{t.save}</button>
           </div>
         </>)}
@@ -969,7 +969,7 @@ function CoachModal({ t, lang, open, wait, doneThisWeek, cats, onAdd, onClose })
   );
 }
 
-// ---------- Wochen-/Monats-Rückblick ----------
+// ---------- Wochen-/Monats-RÃ¼ckblick ----------
 function ReviewModal({ mode, t, tasks, catColor, onDone, onWait, onPush, onClose }) {
   const title = mode === "week" ? t.reviewWeek : t.reviewMonth;
   const info = mode === "week" ? t.reviewInfoW : t.reviewInfoM;
@@ -977,7 +977,7 @@ function ReviewModal({ mode, t, tasks, catColor, onDone, onWait, onPush, onClose
   return (
     <div className="z-overlay" onClick={onClose}>
       <div className="z-sheet" onClick={(e) => e.stopPropagation()}>
-        <div className="z-sheethead">◇ {title}</div>
+        <div className="z-sheethead">â—‡ {title}</div>
         <p className="z-info">{info}</p>
         {tasks.length === 0 && <div className="z-empty">{t.reviewEmpty}</div>}
         {tasks.map((task) => (
@@ -988,9 +988,9 @@ function ReviewModal({ mode, t, tasks, catColor, onDone, onWait, onPush, onClose
               {task.category && <div className="z-sugmeta">{task.category}</div>}
             </div>
             <div className="z-cardacts" style={{ flexWrap: "wrap" }}>
-              <button className="z-act main" onClick={() => onDone(task)}>✓</button>
-              <button className="z-act wide" onClick={() => onPush(task)}>→ {pushLabel}</button>
-              <button className="z-act" onClick={() => onWait(task)}>‖</button>
+              <button className="z-act main" onClick={() => onDone(task)}>âœ“</button>
+              <button className="z-act wide" onClick={() => onPush(task)}>â†’ {pushLabel}</button>
+              <button className="z-act" onClick={() => onWait(task)}>â€–</button>
             </div>
           </div>
         ))}
@@ -1047,7 +1047,7 @@ function AddModal({ t, cats, onAddCat, onClose, onSave }) {
           </div>
           <div className="z-row">
             <input className="z-input slim" placeholder={t.newCategory} value={newCat} onChange={(e) => setNewCat(e.target.value)} />
-            <button className="z-act main" onClick={() => { const c = onAddCat(newCat); if (c) { setCategory(c.name); setNewCat(""); } }}>＋</button>
+            <button className="z-act main" onClick={() => { const c = onAddCat(newCat); if (c) { setCategory(c.name); setNewCat(""); } }}>ï¼‹</button>
           </div>
           <div className="z-sheetfoot">
             <button className="z-ghostbtn" onClick={onClose}>{t.cancel}</button>
@@ -1058,20 +1058,20 @@ function AddModal({ t, cats, onAddCat, onClose, onSave }) {
         {step === 2 && (<>
           <div className="z-q">{t.isLesson}</div>
           <div className="z-choice">
-            <button className="z-choicebtn" onClick={() => { setIsLesson(true); setStep(3); }}>◇ {t.yes}</button>
+            <button className="z-choicebtn" onClick={() => { setIsLesson(true); setStep(3); }}>â—‡ {t.yes}</button>
             <button className="z-choicebtn" onClick={() => { setIsLesson(false); finish(false); }}>{t.no}</button>
           </div>
-          <div className="z-sheetfoot"><button className="z-ghostbtn" onClick={() => setStep(1)}>← {t.back}</button></div>
+          <div className="z-sheetfoot"><button className="z-ghostbtn" onClick={() => setStep(1)}>â† {t.back}</button></div>
         </>)}
 
         {step === 3 && (<>
           <div className="z-q">{t.repeatQ}</div>
           <p className="z-info">{t.repeatInfo}</p>
           <div className="z-choice">
-            <button className="z-choicebtn" onClick={() => finish(true)}>↻ {t.yes}</button>
+            <button className="z-choicebtn" onClick={() => finish(true)}>â†» {t.yes}</button>
             <button className="z-choicebtn" onClick={() => finish(false)}>{t.no}</button>
           </div>
-          <div className="z-sheetfoot"><button className="z-ghostbtn" onClick={() => setStep(2)}>← {t.back}</button></div>
+          <div className="z-sheetfoot"><button className="z-ghostbtn" onClick={() => setStep(2)}>â† {t.back}</button></div>
         </>)}
       </div>
     </div>
@@ -1119,12 +1119,12 @@ function SettingsModal({ t, sentences, setSentences, cats, onAddCat, onDelCat, g
         {sentences.map((s, i) => (
           <div key={i} className="z-sent">
             <span>{s}</span>
-            <button className="z-act dim" onClick={() => setSentences(sentences.filter((_, j) => j !== i))}>✕</button>
+            <button className="z-act dim" onClick={() => setSentences(sentences.filter((_, j) => j !== i))}>âœ•</button>
           </div>
         ))}
         <div className="z-row">
           <input className="z-input slim" placeholder={t.addSentence} value={txt} onChange={(e) => setTxt(e.target.value)} />
-          <button className="z-act main" onClick={() => { if (txt.trim()) { setSentences([...sentences, txt.trim()]); setTxt(""); } }}>＋</button>
+          <button className="z-act main" onClick={() => { if (txt.trim()) { setSentences([...sentences, txt.trim()]); setTxt(""); } }}>ï¼‹</button>
         </div>
 
         <div className="z-label">{t.categories}</div>
@@ -1132,17 +1132,17 @@ function SettingsModal({ t, sentences, setSentences, cats, onAddCat, onDelCat, g
           {cats.map((c) => (
             <span key={c.name} className="z-pill on">
               <span className="z-cdot" style={{ background: c.color }} />{c.name}
-              <button className="z-xin" onClick={() => onDelCat(c.name)}>✕</button>
+              <button className="z-xin" onClick={() => onDelCat(c.name)}>âœ•</button>
             </span>
           ))}
         </div>
         <div className="z-row">
           <input className="z-input slim" placeholder={t.newCategory} value={catTxt} onChange={(e) => setCatTxt(e.target.value)} />
-          <button className="z-act main" onClick={() => { if (onAddCat(catTxt)) setCatTxt(""); }}>＋</button>
+          <button className="z-act main" onClick={() => { if (onAddCat(catTxt)) setCatTxt(""); }}>ï¼‹</button>
         </div>
 
         <div className="z-fixed">
-          <b>◇ {t.planDays}</b>
+          <b>â—‡ {t.planDays}</b>
           <p>{t.planDaysInfo}</p>
         </div>
 
