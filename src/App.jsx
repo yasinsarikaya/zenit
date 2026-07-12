@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase, SUPABASE_CONFIGURED } from "./supabase.js";
 import { notifStatus, ensurePermission, notify } from "./notifications.js";
-import { MdDiamond, MdCheckCircle, MdRemove } from 'react-icons/md';
+
 // Kennung dieses Geräts/Tabs — verhindert Echo beim Live-Sync
 const ORIGIN_ID = Math.random().toString(36).slice(2, 10);
 
