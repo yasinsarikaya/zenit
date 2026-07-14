@@ -374,7 +374,11 @@ function Zenit({ session }) {
     (async () => {
       const { data, error } = await supabase
         .from("zenit_state").select("data").eq("user_id", userId).maybeSingle();
-      if (!error && data && data.data) applyData(data.data);
+      if (error) {
+        console.error("Zenit: Laden fehlgeschlagen", error);
+        return;
+      }
+      if (data && data.data) applyData(data.data);
       setLoaded(true);
     })();
   }, [userId, isOnline]);
